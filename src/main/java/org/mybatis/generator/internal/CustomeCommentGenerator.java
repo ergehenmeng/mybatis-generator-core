@@ -19,10 +19,7 @@ import java.util.List;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.dom.java.Field;
-import org.mybatis.generator.api.dom.java.InnerClass;
-import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.MergeConstants;
@@ -34,10 +31,11 @@ import org.mybatis.generator.config.MergeConstants;
  *
  */
 public class CustomeCommentGenerator extends DefaultCommentGenerator {
-	
-	
-	
-	@Override
+
+
+
+
+    @Override
 	public void addGeneralMethodComment(Method method, IntrospectedTable introspectedTable) {
 		// 生成方法注释
 		method.addJavaDocLine("/**");
@@ -62,7 +60,7 @@ public class CustomeCommentGenerator extends DefaultCommentGenerator {
 		} else if ("countByExample".equals(methodName)) {
 			method.addJavaDocLine(" * 根据条件计数");
 		} else if ("insertSelective".equals(methodName)) {
-			method.addJavaDocLine(" * 插入数据库记录");
+			method.addJavaDocLine(" * 插入不为空的记录");
 		}
 		method.addJavaDocLine(" *");
 		List<Parameter> parameterList = method.getParameters();
@@ -74,13 +72,7 @@ public class CustomeCommentGenerator extends DefaultCommentGenerator {
 		method.addJavaDocLine(" */");
 	}
 	
-	@Override
-	public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable) {
-		innerClass.addJavaDocLine("/**");
-		innerClass.addJavaDocLine(" * 对应数据库 : " + introspectedTable.getFullyQualifiedTable());
-		innerClass.addJavaDocLine(" * 表名: " + introspectedTable.getRemarks());
-		innerClass.addJavaDocLine(" */");
-	}
+
 	
 	
 	@Override
@@ -90,20 +82,27 @@ public class CustomeCommentGenerator extends DefaultCommentGenerator {
 		StringBuffer sb = new StringBuffer();
 		field.addJavaDocLine("/**");
 		if (introspectedColumn.getRemarks() != null)
-			field.addJavaDocLine(" * " + introspectedColumn.getRemarks());
+			field.addJavaDocLine(" * " + introspectedColumn.getRemarks()+ "<br>");
 		sb.append(" * 表 : ");
 		sb.append(introspectedTable.getFullyQualifiedTable());
-		field.addJavaDocLine(sb.toString());
-		field.addJavaDocLine(" * 对应字段 : "+ introspectedColumn.getActualColumnName());
+		field.addJavaDocLine(sb.toString() + "<br>");
+		field.addJavaDocLine(" * 对应字段 : "+ introspectedColumn.getActualColumnName() + "<br>");
 		field.addJavaDocLine(" */");
 	}
-	
+    @Override
+    public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable) {
+        innerClass.addJavaDocLine("/**");
+        innerClass.addJavaDocLine(" * 表名 : " + introspectedTable.getFullyQualifiedTable() + "<br>");
+        innerClass.addJavaDocLine(" * 表注释: " + introspectedTable.getRemarks() + "<br>");
+        innerClass.addJavaDocLine(" */");
+    }
+
 	@Override
 	public void addClassComment(InnerClass innerClass,
 			IntrospectedTable introspectedTable, boolean markAsDoNotDelete) {
 		innerClass.addJavaDocLine("/**");
-		innerClass.addJavaDocLine(" * 对应数据库 : " + introspectedTable.getFullyQualifiedTable());
-		innerClass.addJavaDocLine(" * 表名: " + introspectedTable.getRemarks());
+		innerClass.addJavaDocLine(" * 表名 : " + introspectedTable.getFullyQualifiedTable()+ "<br>");
+		innerClass.addJavaDocLine(" * 表注释: " + introspectedTable.getRemarks()+ "<br>");
 		innerClass.addJavaDocLine(" */");
 	}
 	
