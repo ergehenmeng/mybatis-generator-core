@@ -459,7 +459,6 @@ public class FullyQualifiedJavaType implements
      */
     private void parse(String fullTypeSpecification) {
         String spec = fullTypeSpecification.trim();
-
         if (spec.startsWith("?")) { //$NON-NLS-1$
             wildcardType = true;
             spec = spec.substring(1).trim();

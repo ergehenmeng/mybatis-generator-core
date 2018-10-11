@@ -67,9 +67,10 @@ public class CustomeCommentGenerator extends DefaultCommentGenerator {
 		String paramterName;
 		for (Parameter parameter : parameterList) {
 			paramterName = parameter.getName();
-			method.addJavaDocLine(" * @param " + paramterName);
+			method.addJavaDocLine(" * @param " + paramterName + " 条件 ");
 		}
-		method.addJavaDocLine(" */");
+
+        method.addJavaDocLine(" */");
 	}
 	
 
