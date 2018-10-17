@@ -149,7 +149,9 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                     answer = new FullyQualifiedJavaType(Short.class.getName());
                 }
                 break;
-
+            case Types.TINYINT:
+                answer = new FullyQualifiedJavaType(Byte.class.getName());
+                break;
             default:
                 answer = null;
                 break;
